@@ -18,6 +18,11 @@ nw_corner_water_main = [26, 28];
 // How much space to leave between concrete and studio walls:
 studio_inner_cut = [12, 12];
 
+// Inner studio dimensions:
+studio_inner = studio - [0, nw_corner_water_main[1]] - studio_inner_cut * 2;
+// Studio height off basement floor:
+studio_inner_z = 3;
+
 // draw outer walls minus ceiling (so we can look down in):
 module walls(extents, height, thickness, north=true,east=true,south=true,west=true,floor=true) {
     nthick = north ? thickness : 0;
@@ -84,6 +89,11 @@ mirror([0,1,0]) {
                 walls([basement[0]-studio[0], 200], concrete_height, slab_thickness, south=false);
         }
 
+    // Stairwell:
+    color("brown")
+        translate([studio[0],44,0])
+        stairwell([45, 140]);
+
     // Carpeted area:
     color("silver", 1)
         linear_extrude(0.5)
@@ -121,12 +131,7 @@ mirror([0,1,0]) {
     // Studio room inner:
     color("blue")
         translate(studio_inner_cut + [0, nw_corner_water_main[1]])
-        translate([0, 0, 6])
-        walls(studio - [0, nw_corner_water_main[1]] - studio_inner_cut * 2, concrete_height - 6, 3.5);
-
-    // Stairwell:
-    color("brown")
-        translate([studio[0],44,0])
-        stairwell([45, 140]);
+        translate([0, 0, studio_inner_z])
+        walls(studio_inner, concrete_height - studio_inner_z, 3.5);
 
 }
