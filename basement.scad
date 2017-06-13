@@ -2,12 +2,21 @@
 // all units in inches
 
 concrete_height = 9 * 12;
-slab_thickness = 6;
-//studio = [161, 173];
-studio = [161,171];
+slab_thickness = 12;
+
 basement = [400.5, 375, concrete_height];
 jutout = [48, 160];
+
+// Original uncarpeted area:
+//studio = [161, 173];
+
+// Alloted space from back wall:
+studio = [161,250];
+// Useless corner space dedicated to water main pipe and valve:
 nw_corner_water_main = [26, 28];
+
+// How much space to leave between concrete and studio walls:
+studio_inner_cut = [12, 12];
 
 // draw outer walls minus ceiling (so we can look down in):
 module walls(extents, height, thickness, north=true,east=true,south=true,west=true,floor=true) {
@@ -46,6 +55,7 @@ module walls(extents, height, thickness, north=true,east=true,south=true,west=tr
 
 // TODO: draw stairwell
 module stairwell(extents) {
+    linear_extrude(5)
     square(extents);
 }
 
@@ -77,19 +87,26 @@ mirror([0,1,0]) {
     // Carpeted area:
     color("silver", 1)
         linear_extrude(0.5)
-        difference() {
-            // Full extent of the basement:
-            square([basement[0],basement[1]]);
-            // Subtract non-carpeted studio areas:
-            square(studio);
-            square(nw_corner_water_main);
-            // Subtract stairwell:
-            translate([studio[0],0,0])
-                stairwell([45, 44+140]);
-            // Workout corner area:
-            translate([0,basement[1],0])
-                mirror([0,1,0])
-                square([72,95]);
+        union() {
+            difference() {
+                // Full extent of the basement:
+                square([basement[0],basement[1]]);
+                // Subtract non-carpeted studio areas:
+                square(studio);
+                square(nw_corner_water_main);
+                // Subtract area behind stairwell:
+                translate([studio[0],0,0])
+                    square([45, 44]);
+                // Subtract stairwell:
+                translate([studio[0],0,0])
+                    square([45, 44+140]);
+                // Workout corner area:
+                translate([0,basement[1],0])
+                    mirror([0,1,0])
+                    square([72,95]);
+            }
+            translate([basement[0],96,0])
+                square(jutout);
         }
 
     // Studio area:
@@ -100,6 +117,12 @@ mirror([0,1,0]) {
             square(studio);
             square(nw_corner_water_main);
         }
+    
+    // Studio room inner:
+    color("blue")
+        translate(studio_inner_cut + [0, nw_corner_water_main[1]])
+        translate([0, 0, 6])
+        walls(studio - [0, nw_corner_water_main[1]] - studio_inner_cut * 2, concrete_height - 6, 3.5);
 
     // Stairwell:
     color("brown")
