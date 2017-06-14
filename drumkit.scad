@@ -133,6 +133,7 @@ module kit() {
 
     // throne:
     translate([0, 44, 16])
+        color("DarkSlateGray")
         difference() {
             cylinder(5, 8, 8, $fn = 40);
             translate([9, -9, -1])
