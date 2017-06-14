@@ -64,6 +64,8 @@ module stairwell(extents) {
     square(extents);
 }
 
+include <drumkit.scad>;
+
 // Flip Y-coordinate:
 mirror([0,1,0]) {
     // Basement walls:
@@ -129,9 +131,15 @@ mirror([0,1,0]) {
         }
     
     // Studio room inner:
-    color("blue")
         translate(studio_inner_cut + [0, nw_corner_water_main[1]])
-        translate([0, 0, studio_inner_z])
-        walls(studio_inner, concrete_height - studio_inner_z, 3.5);
+        translate([0, 0, studio_inner_z]) {
+            color("blue")
+                walls(studio_inner, concrete_height - studio_inner_z, 3.5);
+
+            translate([60, 60, 0])
+                rotate([0, 0, -45])
+                mirror([0, 1, 0])
+                kit();
+        }
 
 }
