@@ -133,7 +133,7 @@ module stairwell(extents, height) {
     }
 }
 
-include <drumkit.scad>;
+use <drumkit.scad>;
 
 // Flip Y-coordinate:
 mirror([0,1,0]) {

@@ -54,12 +54,9 @@ module tom(r = 7, d = 5) {
 }
 
 module kit() {
-    kick_r = 11;
-    kick_d = 16;
-    snare_r = 7;
-    snare_d = 5;
-    floor_r = 8;
-    floor_d = 12;
+    kick_r = 11; kick_d = 16;
+    snare_r = 7; snare_d = 5;
+    floor_r = 8; floor_d = 12;
 
     // kick:
     kick(r = kick_r, d = kick_d);
@@ -74,3 +71,6 @@ module kit() {
         rotate([-5, 5, 0])
         drum(r = floor_r, d = floor_d, t = 0.125);
 }
+
+kit();
+
