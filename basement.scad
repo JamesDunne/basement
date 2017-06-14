@@ -19,7 +19,8 @@ studio = [161,256];
 nw_corner_water_main = [26, 28];
 
 // How much space to leave between concrete and studio walls:
-studio_inner_cut = [16, 16];
+// studio_inner_cut = [16, 16];
+studio_inner_cut = [0, 0];
 
 // Inner studio dimensions:
 studio_inner = studio - [0, nw_corner_water_main[1]] - studio_inner_cut * 2;
@@ -60,9 +61,9 @@ module walls(extents, height, thickness, north=true,east=true,south=true,west=tr
     wthick = west ? thickness : 0;
     union() {
         if (floor) {
-            translate([-wthick, -nthick, -thickness])
+            translate([0, 0, -thickness])
                 linear_extrude(thickness)
-                square([extents[0]+wthick+ethick, extents[1]+nthick+sthick]);
+                square([extents[0], extents[1]]);
         }
         if (studs) {
             if (north) {
@@ -126,8 +127,8 @@ module stairwell(extents, height) {
         stud(extents[1], height, spacing = 14);
 
     // steps:
-    for (n = [0 : 15]) {
-        translate([stud24_w, n * 11, n * 7])
+    for (n = [0 : 14]) {
+        translate([stud24_w, n * 11, (n+1) * 7])
             cube([45 - stud24_w * 2, 12, stud24_h]);
     }
 }
@@ -205,6 +206,7 @@ mirror([0,1,0]) {
             color("blue")
                 walls(studio_inner, concrete_height - studio_inner_z, 3.5, walls=false, studs=true);
 
+            // place the drum kit inside for scale:
             translate([60, 60, 0])
                 rotate([0, 0, -45])
                 mirror([0, 1, 0])
