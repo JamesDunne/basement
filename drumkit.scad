@@ -69,79 +69,88 @@ module kit() {
     // rack_r  = 5;  rack_d  =  8; // 10" x 8"
     rack_r  = 6;  rack_d  =  9; // 12" x 9"
 
-    // kick:
-    kick(r = kick_r, d = kick_d);
+    carpet_w = 8 * 12;
+    carpet_l = 6 * 12;
 
-    // floor tom:
-    translate([-14, 24, 12])
-        rotate([-0, 10, 0])
-        drum(r = floor_r, d = floor_d, t = 0.125);
+    // carpet:
+    translate([0 - carpet_w * 0.5, -12, 0])
+    color("MidnightBlue")
+    cube([carpet_w, carpet_l, 0.25]);
 
-    // rack tom:
-    translate([16, 8, 21])
-        rotate([-25, -8, 0])
-        drum(r = rack_r, d = rack_d, t = 0.125);
+    translate([0, 0, 0.25]) {
+        // kick:
+        kick(r = kick_r, d = kick_d);
 
-    // snare:
-    translate([12, 27, 16])
-        rotate([2, -1, 0])
-        drum(r = snare_r, d = snare_d, t = 0.125);
+        // floor tom:
+        translate([-14, 24, 12])
+            rotate([-0, 10, 0])
+            drum(r = floor_r, d = floor_d, t = 0.125);
 
-    color("Khaki", 1) {
-        // hi-hat 14":
-        translate([26, 28, 0]) {
-            cylinder(35, 0.5, 0.5, $fn = 40);
-            cylinder(45, 0.25, 0.25, $fn = 40);
+        // rack tom:
+        translate([16, 8, 21])
+            rotate([-25, -8, 0])
+            drum(r = rack_r, d = rack_d, t = 0.125);
 
-            translate([0, 0, 33])
+        // snare:
+        translate([12, 27, 16])
+            rotate([2, -1, 0])
+            drum(r = snare_r, d = snare_d, t = 0.125);
+
+        color("Khaki", 1) {
+            // hi-hat 14":
+            translate([26, 28, 0]) {
+                cylinder(35, 0.5, 0.5, $fn = 40);
+                cylinder(45, 0.25, 0.25, $fn = 40);
+
+                translate([0, 0, 33])
+                    mirror([0, 0, 1])
+                    cylinder(1, 0, 7, $fn = 40); // 14"
+                translate([0, 0, 33 - 2.5])
+                    cylinder(1, 0, 7, $fn = 40); // 14"
+            }
+
+            // ride 22":
+            translate([-4, 10, 31])
                 mirror([0, 0, 1])
-                cylinder(1, 0, 7, $fn = 40); // 14"
-            translate([0, 0, 33 - 2.5])
-                cylinder(1, 0, 7, $fn = 40); // 14"
+                rotate([14, -6, -12])
+                cylinder(3, 0, 11, $fn = 40); // 22"
+
+            // splash 18":
+            translate([-10, 10, 44])
+                mirror([0, 0, 1])
+                rotate([14, -6, -12])
+                cylinder(3, 0, 9, $fn = 40); // 18"
+
+            // splash 16":
+            translate([20, 14, 43])
+                mirror([0, 0, 1])
+                rotate([0, 0, 20])
+                cylinder(2, 0, 8, $fn = 40); // 16"
+
+            // splash 10":
+            translate([20, 20, 35])
+                mirror([0, 0, 1])
+                rotate([2, 2, 20])
+                cylinder(1, 0, 5, $fn = 40); // 10"
+
+            // china 16":
+            translate([-15, 28, 38])
+                mirror([0, 0, 1])
+                rotate([-10, -10, 90])
+                cylinder(2, 0, 8, $fn = 40); // 16"
         }
 
-        // ride 22":
-        translate([-4, 10, 31])
-            mirror([0, 0, 1])
-            rotate([14, -6, -12])
-            cylinder(3, 0, 11, $fn = 40); // 22"
-
-        // splash 18":
-        translate([-10, 10, 44])
-            mirror([0, 0, 1])
-            rotate([14, -6, -12])
-            cylinder(3, 0, 9, $fn = 40); // 18"
-
-        // splash 16":
-        translate([20, 14, 43])
-            mirror([0, 0, 1])
-            rotate([0, 0, 20])
-            cylinder(2, 0, 8, $fn = 40); // 16"
-
-        // splash 10":
-        translate([20, 20, 35])
-            mirror([0, 0, 1])
-            rotate([2, 2, 20])
-            cylinder(1, 0, 5, $fn = 40); // 10"
-
-        // china 16":
-        translate([-15, 28, 38])
-            mirror([0, 0, 1])
-            rotate([-10, -10, 90])
-            cylinder(2, 0, 8, $fn = 40); // 16"
+        // throne:
+        translate([0, 44, 16])
+            color("DarkSlateGray")
+            difference() {
+                cylinder(5, 8, 8, $fn = 40);
+                translate([9, -9, -1])
+                    cylinder(7, 8, 8, $fn = 40);
+                translate([-9, -9, -1])
+                    cylinder(7, 8, 8, $fn = 40);
+            }
     }
-
-    // throne:
-    translate([0, 44, 16])
-        color("DarkSlateGray")
-        difference() {
-            cylinder(5, 8, 8, $fn = 40);
-            translate([9, -9, -1])
-                cylinder(7, 8, 8, $fn = 40);
-            translate([-9, -9, -1])
-                cylinder(7, 8, 8, $fn = 40);
-        }
-
 }
 
 kit();
