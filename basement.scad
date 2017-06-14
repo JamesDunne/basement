@@ -24,31 +24,33 @@ studio_inner = studio - [0, nw_corner_water_main[1]] - studio_inner_cut * 2;
 studio_inner_z = 3;
 
 // draw outer walls minus ceiling (so we can look down in):
-module walls(extents, height, thickness, north=true,east=true,south=true,west=true,floor=true) {
+module walls(extents, height, thickness, north=true,east=true,south=true,west=true,floor=true, walls=true) {
     nthick = north ? thickness : 0;
     ethick = east ? thickness : 0;
     sthick = south ? thickness : 0;
     wthick = west ? thickness : 0;
     union() {
-        if (north) {
-            translate([-wthick, -nthick, -thickness])
-                linear_extrude(height+thickness)
-                square([extents[0]+wthick+ethick, nthick]);
-        }
-        if (east) {
-            translate([extents[0], -nthick, -thickness])
-                linear_extrude(height+thickness)
-                square([ethick, extents[1]+nthick+sthick]);
-        }
-        if (south) {
-            translate([-wthick, extents[1], -thickness])
-                linear_extrude(height+thickness)
-                square([extents[0]+wthick+ethick, sthick]);
-        }
-        if (west) {
-            translate([-wthick, -nthick, -thickness])
-                linear_extrude(height+thickness)
-                square([wthick, extents[1]+nthick+sthick]);
+        if (walls) {
+            if (north) {
+                translate([-wthick, -nthick, -thickness])
+                    linear_extrude(height+thickness)
+                    square([extents[0]+wthick+ethick, nthick]);
+            }
+            if (east) {
+                translate([extents[0], -nthick, -thickness])
+                    linear_extrude(height+thickness)
+                    square([ethick, extents[1]+nthick+sthick]);
+            }
+            if (south) {
+                translate([-wthick, extents[1], -thickness])
+                    linear_extrude(height+thickness)
+                    square([extents[0]+wthick+ethick, sthick]);
+            }
+            if (west) {
+                translate([-wthick, -nthick, -thickness])
+                    linear_extrude(height+thickness)
+                    square([wthick, extents[1]+nthick+sthick]);
+            }
         }
         if (floor) {
             translate([-wthick, -nthick, -thickness])
@@ -72,7 +74,7 @@ mirror([0,1,0]) {
     color("gray", 1)
         union() {
             difference() {
-                walls(basement, concrete_height, slab_thickness);
+                walls(basement, concrete_height, slab_thickness, walls=false);
                 // jut out:
                 translate([basement[0]-1,96,0])
                     linear_extrude(concrete_height+1)
@@ -85,10 +87,10 @@ mirror([0,1,0]) {
             }
             // jut out:
             translate([basement[0],96,0])
-                walls(jutout, concrete_height, slab_thickness, west=false);
+                walls(jutout, concrete_height, slab_thickness, west=false, walls=false);
             // utility room:
             translate([studio[0],-200,0])
-                walls([basement[0]-studio[0], 200], concrete_height, slab_thickness, south=false);
+                walls([basement[0]-studio[0], 200], concrete_height, slab_thickness, south=false, walls=false);
         }
 
     // Stairwell:
