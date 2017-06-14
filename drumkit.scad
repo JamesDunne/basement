@@ -87,34 +87,48 @@ module kit() {
         rotate([2, -1, 0])
         drum(r = snare_r, d = snare_d, t = 0.125);
 
-    // ride:
-    translate([-4, 10, 31])
-        mirror([0, 0, 1])
-        rotate([14, -6, -12])
-        cylinder(3, 0, 11, $fn = 40); // 22"
+    color("Khaki", 1) {
+        // hi-hat 14":
+        translate([26, 28, 0]) {
+            cylinder(35, 0.5, 0.5, $fn = 40);
+            cylinder(45, 0.25, 0.25, $fn = 40);
 
-    // splash 18":
-    translate([-10, 10, 44])
-        mirror([0, 0, 1])
-        rotate([14, -6, -12])
-        cylinder(3, 0, 9, $fn = 40); // 18"
+            translate([0, 0, 33])
+                mirror([0, 0, 1])
+                cylinder(1, 0, 7, $fn = 40); // 14"
+            translate([0, 0, 33 - 2.5])
+                cylinder(1, 0, 7, $fn = 40); // 14"
+        }
 
-    // splash 16":
-    translate([20, 14, 43])
-        mirror([0, 0, 1])
-        rotate([0, 0, 20])
-        cylinder(2, 0, 8, $fn = 40); // 16"
-
-    // hi-hat 14":
-    translate([26, 28, 0]) {
-        cylinder(35, 0.5, 0.5, $fn = 40);
-        cylinder(45, 0.25, 0.25, $fn = 40);
-
-        translate([0, 0, 33])
+        // ride 22":
+        translate([-4, 10, 31])
             mirror([0, 0, 1])
-            cylinder(1, 0, 7, $fn = 40); // 14"
-        translate([0, 0, 33 - 2.5])
-            cylinder(1, 0, 7, $fn = 40); // 14"
+            rotate([14, -6, -12])
+            cylinder(3, 0, 11, $fn = 40); // 22"
+
+        // splash 18":
+        translate([-10, 10, 44])
+            mirror([0, 0, 1])
+            rotate([14, -6, -12])
+            cylinder(3, 0, 9, $fn = 40); // 18"
+
+        // splash 16":
+        translate([20, 14, 43])
+            mirror([0, 0, 1])
+            rotate([0, 0, 20])
+            cylinder(2, 0, 8, $fn = 40); // 16"
+
+        // splash 10":
+        translate([21, 15, 35])
+            mirror([0, 0, 1])
+            rotate([0, 5, 20])
+            cylinder(2, 0, 5, $fn = 40); // 10"
+
+        // china 16":
+        translate([-15, 28, 38])
+            mirror([0, 0, 1])
+            rotate([-10, -10, 90])
+            cylinder(2, 0, 8, $fn = 40); // 16"
     }
 }
 
