@@ -7,16 +7,19 @@ slab_thickness = 12;
 basement = [400.5, 375, concrete_height];
 jutout = [48, 160];
 
+stud24_w = 3.5;
+stud24_h = 1.5;
+
 // Original uncarpeted area:
 //studio = [161, 173];
 
 // Alloted space from back wall:
-studio = [161,250];
+studio = [161,256];
 // Useless corner space dedicated to water main pipe and valve:
 nw_corner_water_main = [26, 28];
 
 // How much space to leave between concrete and studio walls:
-studio_inner_cut = [12, 12];
+studio_inner_cut = [16, 16];
 
 // Inner studio dimensions:
 studio_inner = studio - [0, nw_corner_water_main[1]] - studio_inner_cut * 2;
@@ -24,9 +27,28 @@ studio_inner = studio - [0, nw_corner_water_main[1]] - studio_inner_cut * 2;
 studio_inner_z = 3;
 
 module stud(length, height, spacing = 16) {
-    for (space = [0 : spacing : length]) {
+    exact = (floor(length / spacing) - 1);
+    remainder = length - (exact * spacing);
+    offset = 0;
+    if (remainder > 3) {
+        offset = remainder * 0.5;
+    }
+
+    space = 0;
+    for (n = [0 : exact]) {
+        space = offset + n * spacing;
         translate([space, 0, 0])
-            cube([1.5, 3.5, height]);
+            cube([stud24_h, stud24_w, height - stud24_h]);
+        translate([space + stud24_h, 0, 0])
+            cube([spacing - (stud24_h * 2), stud24_w, stud24_h]);
+        translate([space + spacing - stud24_h, 0, 0])
+            cube([stud24_h, stud24_w, height - stud24_h]);
+        translate([space, 0, height - stud24_h])
+            cube([spacing, stud24_w, stud24_h]);
+    }
+
+    if (remainder > 0) {
+        // TODO: add remainder studs
     }
 }
 
@@ -90,9 +112,24 @@ module walls(extents, height, thickness, north=true,east=true,south=true,west=tr
 }
 
 // TODO: draw stairwell
-module stairwell(extents) {
-    linear_extrude(5)
+module stairwell(extents, height) {
+    linear_extrude(0.5)
     square(extents);
+
+    // studs:
+    translate([0, extents[1], 0])
+        rotate([0, 0, 270])
+        stud(extents[1], height, spacing = 14);
+
+    translate([extents[0], 0, 0])
+        rotate([0, 0, 90])
+        stud(extents[1], height, spacing = 14);
+
+    // steps:
+    for (n = [0 : 15]) {
+        translate([stud24_w, n * 11, n * 7])
+            cube([45 - stud24_w * 2, 12, stud24_h]);
+    }
 }
 
 include <drumkit.scad>;
@@ -124,8 +161,9 @@ mirror([0,1,0]) {
 
     // Stairwell:
     color("brown")
-        translate([studio[0],44,0])
-        stairwell([45, 140]);
+        translate([studio[0],44+140,0])
+        mirror([0, 1, 0])
+        stairwell([45, 140], concrete_height);
 
     // Carpeted area:
     color("silver", 1)
