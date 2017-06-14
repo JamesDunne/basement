@@ -119,10 +119,10 @@ module kit() {
             cylinder(2, 0, 8, $fn = 40); // 16"
 
         // splash 10":
-        translate([21, 15, 35])
+        translate([20, 20, 35])
             mirror([0, 0, 1])
-            rotate([0, 5, 20])
-            cylinder(2, 0, 5, $fn = 40); // 10"
+            rotate([2, 2, 20])
+            cylinder(1, 0, 5, $fn = 40); // 10"
 
         // china 16":
         translate([-15, 28, 38])
