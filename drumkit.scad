@@ -130,6 +130,17 @@ module kit() {
             rotate([-10, -10, 90])
             cylinder(2, 0, 8, $fn = 40); // 16"
     }
+
+    // throne:
+    translate([0, 44, 16])
+        difference() {
+            cylinder(5, 8, 8, $fn = 40);
+            translate([9, -9, -1])
+                cylinder(7, 8, 8, $fn = 40);
+            translate([-9, -9, -1])
+                cylinder(7, 8, 8, $fn = 40);
+        }
+
 }
 
 kit();
