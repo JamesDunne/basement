@@ -23,13 +23,47 @@ studio_inner = studio - [0, nw_corner_water_main[1]] - studio_inner_cut * 2;
 // Studio height off basement floor:
 studio_inner_z = 3;
 
+module stud(length, height, spacing = 16) {
+    for (space = [0 : spacing : length]) {
+        translate([space, 0, 0])
+            cube([1.5, 3.5, height]);
+    }
+}
+
 // draw outer walls minus ceiling (so we can look down in):
-module walls(extents, height, thickness, north=true,east=true,south=true,west=true,floor=true, walls=true) {
+module walls(extents, height, thickness, north=true,east=true,south=true,west=true,floor=true, walls=false, studs=false) {
     nthick = north ? thickness : 0;
     ethick = east ? thickness : 0;
     sthick = south ? thickness : 0;
     wthick = west ? thickness : 0;
     union() {
+        if (floor) {
+            translate([-wthick, -nthick, -thickness])
+                linear_extrude(thickness)
+                square([extents[0]+wthick+ethick, extents[1]+nthick+sthick]);
+        }
+        if (studs) {
+            if (north) {
+                translate([0, 0, 0])
+                    rotate([0, 0, 0])
+                    stud(extents[0], height);
+            }
+            if (east) {
+                translate([extents[0], 0, 0])
+                    rotate([0, 0, 90])
+                    stud(extents[1], height);
+            }
+            if (south) {
+                translate([extents[0], extents[1], 0])
+                    rotate([0, 0, 180])
+                    stud(extents[0], height);
+            }
+            if (west) {
+                translate([0, extents[1], 0])
+                    rotate([0, 0, 270])
+                    stud(extents[1], height);
+            }
+        }
         if (walls) {
             if (north) {
                 translate([-wthick, -nthick, -thickness])
@@ -51,11 +85,6 @@ module walls(extents, height, thickness, north=true,east=true,south=true,west=tr
                     linear_extrude(height+thickness)
                     square([wthick, extents[1]+nthick+sthick]);
             }
-        }
-        if (floor) {
-            translate([-wthick, -nthick, -thickness])
-                linear_extrude(thickness)
-                square([extents[0]+wthick+ethick, extents[1]+nthick+sthick]);
         }
     }
 }
@@ -131,12 +160,12 @@ mirror([0,1,0]) {
             square(studio);
             square(nw_corner_water_main);
         }
-    
+
     // Studio room inner:
         translate(studio_inner_cut + [0, nw_corner_water_main[1]])
         translate([0, 0, studio_inner_z]) {
             color("blue")
-                walls(studio_inner, concrete_height - studio_inner_z, 3.5);
+                walls(studio_inner, concrete_height - studio_inner_z, 3.5, walls=false, studs=true);
 
             translate([60, 60, 0])
                 rotate([0, 0, -45])
