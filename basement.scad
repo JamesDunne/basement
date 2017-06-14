@@ -69,7 +69,7 @@ include <drumkit.scad>;
 // Flip Y-coordinate:
 mirror([0,1,0]) {
     // Basement walls:
-    color("gray", 0.5)
+    color("gray", 1)
         union() {
             difference() {
                 walls(basement, concrete_height, slab_thickness);
