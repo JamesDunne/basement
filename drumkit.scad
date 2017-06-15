@@ -69,7 +69,7 @@ module kit() {
     // rack_r  = 5;  rack_d  =  8; // 10" x 8"
     rack_r  = 6;  rack_d  =  9; // 12" x 9"
 
-    carpet_w = 83;
+    carpet_w = 82;
     carpet_l = 59;
 
     // carpet:
@@ -77,7 +77,7 @@ module kit() {
     color("MidnightBlue")
     cube([carpet_w, carpet_l, 0.25]);
 
-    translate([0, 0, 0.25]) {
+    translate([-4, -4, 0.25]) {
         // kick:
         kick(r = kick_r, d = kick_d);
 
