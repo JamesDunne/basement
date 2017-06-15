@@ -201,14 +201,14 @@ mirror([0,1,0]) {
         }
 
     // Studio room inner:
-        translate(studio_inner_cut + [0, nw_corner_water_main[1]])
+    translate(studio_inner_cut + [0, nw_corner_water_main[1]])
         translate([0, 0, studio_inner_z]) {
             color("blue")
                 walls(studio_inner, concrete_height - studio_inner_z, 3.5, walls=false, studs=true);
 
             // place the drum kit inside for scale:
-            translate([70, 70, 0])
-                rotate([0, 0, -45])
+            translate([60, 180, 0])
+                rotate([0, 0, 180])
                 mirror([0, 1, 0])
                 kit();
         }
