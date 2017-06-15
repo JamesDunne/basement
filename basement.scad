@@ -2,7 +2,7 @@
 // all units in inches
 
 concrete_height = 9 * 12;
-slab_thickness = 12;
+slab_thickness = 6;
 
 basement = [400.5, 375, concrete_height];
 jutout = [48, 160];
@@ -202,21 +202,23 @@ mirror([0,1,0]) {
 
     // Studio room inner:
     translate(studio_inner_cut + [0, nw_corner_water_main[1]])
-        translate([0, 0, studio_inner_z]) {
+        translate([0, 0, 0]) {
             // Outer walls:
             color("DarkBlue", 1)
                 walls(studio_inner, concrete_height - studio_inner_z, 3.5, walls=false, studs=true, floor=false);
 
-            // Inner walls:
-            color("MediumBlue", 1)
-                translate([7, 7, 2])
-                walls(studio_inner - [14, 14], concrete_height - studio_inner_z - 2, 3.5, walls=false, studs=true, floor=false);
+            translate([0, 0, studio_inner_z]) {
+                // Inner walls:
+                color("MediumBlue", 1)
+                    translate([7, 7, 0])
+                    walls(studio_inner - [14, 14], concrete_height - studio_inner_z - 2, 3.5, walls=false, studs=true, floor=true);
 
-            // place the drum kit inside for scale:
-            translate([60, 180, 0])
-                rotate([0, 0, 180])
-                mirror([0, 1, 0])
-                kit();
+                // place the drum kit inside for scale:
+                translate([60, 180, 0])
+                    rotate([0, 0, 180])
+                    mirror([0, 1, 0])
+                    kit();
+            }
         }
 
 }
