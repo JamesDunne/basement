@@ -160,12 +160,6 @@ mirror([0,1,0]) {
                 walls([basement[0]-studio[0], 200], concrete_height, slab_thickness, south=false, walls=false);
         }
 
-    // Stairwell:
-    color("Sienna", 0.5)
-        translate([studio[0],44+140,0])
-        mirror([0, 1, 0])
-        stairwell([45, 140], concrete_height);
-
     // Carpeted area:
     color("DarkGray", 1)
         linear_extrude(0.5)
@@ -200,11 +194,23 @@ mirror([0,1,0]) {
             square(nw_corner_water_main);
         }
 
+    // Stairwell:
+    color("Sienna", 1)
+        translate([studio[0],44+140,0])
+        mirror([0, 1, 0])
+        stairwell([45, 140], concrete_height);
+
     // Studio room inner:
     translate(studio_inner_cut + [0, nw_corner_water_main[1]])
         translate([0, 0, studio_inner_z]) {
-            color("blue", 0.5)
-                walls(studio_inner, concrete_height - studio_inner_z, 3.5, walls=false, studs=true);
+            // Outer walls:
+            color("DarkBlue", 1)
+                walls(studio_inner, concrete_height - studio_inner_z, 3.5, walls=false, studs=true, floor=false);
+
+            // Inner walls:
+            color("MediumBlue", 1)
+                translate([7, 7, 2])
+                walls(studio_inner - [14, 14], concrete_height - studio_inner_z - 2, 3.5, walls=false, studs=true, floor=false);
 
             // place the drum kit inside for scale:
             translate([60, 180, 0])
