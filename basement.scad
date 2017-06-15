@@ -161,13 +161,13 @@ mirror([0,1,0]) {
         }
 
     // Stairwell:
-    color("brown")
+    color("Sienna", 0.5)
         translate([studio[0],44+140,0])
         mirror([0, 1, 0])
         stairwell([45, 140], concrete_height);
 
     // Carpeted area:
-    color("silver", 1)
+    color("DarkGray", 1)
         linear_extrude(0.5)
         union() {
             difference() {
@@ -194,7 +194,7 @@ mirror([0,1,0]) {
     // Studio area:
     color("green", 1)
         translate([0,0,0])
-        linear_extrude(0.5)
+        linear_extrude(0.25)
         difference() {
             square(studio);
             square(nw_corner_water_main);
@@ -203,7 +203,7 @@ mirror([0,1,0]) {
     // Studio room inner:
     translate(studio_inner_cut + [0, nw_corner_water_main[1]])
         translate([0, 0, studio_inner_z]) {
-            color("blue")
+            color("blue", 0.5)
                 walls(studio_inner, concrete_height - studio_inner_z, 3.5, walls=false, studs=true);
 
             // place the drum kit inside for scale:
