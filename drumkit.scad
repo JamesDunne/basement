@@ -69,8 +69,8 @@ module kit() {
     // rack_r  = 5;  rack_d  =  8; // 10" x 8"
     rack_r  = 6;  rack_d  =  9; // 12" x 9"
 
-    carpet_w = 8 * 12;
-    carpet_l = 6 * 12;
+    carpet_w = 83;
+    carpet_l = 59;
 
     // carpet:
     translate([0 - carpet_w * 0.5, -12, 0])
