@@ -27,6 +27,17 @@ studio_inner = studio - [0, nw_corner_water_main[1]] - studio_inner_cut * 2;
 // Studio height off basement floor:
 studio_inner_z = 3;
 
+module frame(length, height) {
+    translate([0, 0, 0])
+        cube([stud24_h, stud24_w, height - stud24_h]);
+    translate([0 + stud24_h, 0, 0])
+        cube([length - (stud24_h * 2), stud24_w, stud24_h]);
+    translate([0 + length - stud24_h, 0, 0])
+        cube([stud24_h, stud24_w, height - stud24_h]);
+    translate([0, 0, height - stud24_h])
+        cube([length, stud24_w, stud24_h]);
+}
+
 module stud(length, height, spacing = 16) {
     exact = (floor(length / spacing) - 1);
     remainder = length - (exact * spacing);
@@ -39,13 +50,7 @@ module stud(length, height, spacing = 16) {
     for (n = [0 : exact]) {
         space = offset + n * spacing;
         translate([space, 0, 0])
-            cube([stud24_h, stud24_w, height - stud24_h]);
-        translate([space + stud24_h, 0, 0])
-            cube([spacing - (stud24_h * 2), stud24_w, stud24_h]);
-        translate([space + spacing - stud24_h, 0, 0])
-            cube([stud24_h, stud24_w, height - stud24_h]);
-        translate([space, 0, height - stud24_h])
-            cube([spacing, stud24_w, stud24_h]);
+            frame(spacing, height);
     }
 
     if (remainder > 0) {
