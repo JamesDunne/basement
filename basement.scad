@@ -210,13 +210,13 @@ mirror([0,1,0]) {
         translate([0, 0, 0]) {
             // Outer walls:
             color("DarkBlue", 1)
-                walls(studio_inner, concrete_height - studio_inner_z, 3.5, walls=false, studs=true, floor=false);
+                walls(studio_inner, concrete_height - studio_inner_z, 3.5, walls=false, studs=true, floor=false, west=false);
 
             translate([0, 0, studio_inner_z]) {
                 // Inner walls:
                 color("MediumBlue", 1)
-                    translate([7, 7, 0])
-                    walls(studio_inner - [14, 14], concrete_height - studio_inner_z - 2, 3.5, walls=false, studs=true, floor=true);
+                    translate([0, 7, 0])
+                    walls(studio_inner - [7, 14], concrete_height - studio_inner_z - 2, 3.5, walls=false, studs=true, floor=true);
 
                 // place the drum kit inside for scale:
                 translate([60, 180, 0])
