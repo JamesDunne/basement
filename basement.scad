@@ -14,7 +14,8 @@ stud24_h = 1.5;
 //studio = [161, 173];
 
 // Alloted space from back wall:
-studio = [161,256+16];
+//studio = [161,256+16];
+studio = [161, basement[1] - 95];
 // Useless corner space dedicated to water main pipe and valve:
 nw_corner_water_main = [26, 28];
 
@@ -191,6 +192,7 @@ mirror([0,1,0]) {
         }
 
     // Studio area:
+        /*
     color("green", 1)
         translate([0,0,0])
         linear_extrude(0.25)
@@ -198,6 +200,7 @@ mirror([0,1,0]) {
             square(studio);
             square(nw_corner_water_main);
         }
+        */
 
     // Stairwell:
     color("Sienna", 1)
@@ -216,7 +219,7 @@ mirror([0,1,0]) {
                 // Inner walls:
                 color("MediumBlue", 1)
                     translate([0, 7, 0])
-                    walls(studio_inner - [7, 14], concrete_height - studio_inner_z - 2, 3.5, walls=false, studs=true, floor=true);
+                    walls(studio_inner - [7, 14], concrete_height - studio_inner_z - 2, 3.5, walls=false, studs=true, floor=false);
 
                 // place the drum kit inside for scale:
                 translate([60, 180, 0])
