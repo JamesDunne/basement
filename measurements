@@ -1,0 +1,51 @@
+Height
+
+92 to bottom of I-beam
+101.5 to bottom of rafter, top of light fixtures
+113 floor to ceiling
+
+Window
+
+29 floor to bottom of window
+34 right edge to left of window
+48 ID of window horizontal
+48 ID of window vertical
+
+Support beams
+19 - 8 = circumference of poles
+3.5 = diameter of pole
+
+Entertainment area
+52 to inlet
+4 depth
+32 inlet to concrete block tower
+16 depth
+8 across
+32 concrete to left inlet
+52 inlet to wall
+
+Behind stairwell
+44 Y from concrete to back stair stud
+45 X width OD stairwell outer edges of studs
+38 X width ID stairs
+
+33 Y edge of concrete to center support beam
+38 X edge of concrete to center support beam
+
+108.5 Y between back and mid centers of support beams along stairwell
+116.5 Y from center of mid stairwell support to center of support in front of stairwell
+43.5 X between centers of support beams
+
+192 Y stairwell to concrete
+116.5 Y concrete to center support beam
+
+161 X Jim office concrete wall to OD stairwell stud
+
+2.25 X from left I beam edge to OD stair stud
+2 X from right I beam edge to OD stair stud
+5-3/8 I beam width (X)
+8-5/16 I beam height (Z)
+
+14 stairs, 15th is floor
+11 stair depth (Y)
+7-5/8 stair height (Z)
